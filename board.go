@@ -40,10 +40,10 @@ func NewBoard() *Board {
 /*
 // Initialization of chessboard
 func (b *Board) Init() {
-	b[3][3] = white
-	b[4][4] = white
-	b[3][4] = black
-	b[4][3] = black
+	b[3][3] = -1
+	b[4][4] = -1
+	b[3][4] = 1
+	b[4][3] = 1
 }
 */
 
