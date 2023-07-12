@@ -16,6 +16,6 @@ go run board.go
 
 
 ### Scrum 2
-![scrum_2](./docs/scrum_1.png)
+![scrum_2](./docs/scrum_2.png)
 
 ### Scrum 3
