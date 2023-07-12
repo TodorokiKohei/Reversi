@@ -3,7 +3,7 @@
 
 ## Start
 ```
-go run cmd/main.go
+go run board.go
 ```
 
 ## User story mapping
@@ -16,6 +16,6 @@ go run cmd/main.go
 
 
 ### Scrum 2
-
+![scrum_2](./docs/scrum_1.png)
 
 ### Scrum 3
