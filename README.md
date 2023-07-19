@@ -34,3 +34,7 @@ go run board.go
 ![scrum_2](./docs/scrum_2.png)
 
 ### Scrum 3
+![scrum_3](./docs/scrum_3.png)
+
+### Scrum 4
+![scrum_4](./docs/scrum_4.png)
