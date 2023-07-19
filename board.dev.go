@@ -16,6 +16,17 @@ const (
 	size  = 8
 )
 
+func getPlayerName(player int) string {
+	switch player {
+	case black:
+		return "Black"
+	case white:
+		return "White"
+	default:
+		return ""
+	}
+}
+
 type Board struct {
 	tokens [][]int
 }
@@ -46,7 +57,7 @@ func (b *Board) Init() {
 }
 
 // put a specific chess on chessboard
-func (b *Board) Put(x, y, u int) {
+func (b *Board) Put(x, y int, u int) {
 	if u == black {
 		b.tokens[y][x] = 1
 	} else if u == white {
@@ -55,13 +66,13 @@ func (b *Board) Put(x, y, u int) {
 }
 
 // get info of chess from a position
-func (b *Board) Get(x, y int) string {
-	if b.tokens[y][x] == black {
-		return "b"
-	} else if b.tokens[y][x] == white {
-		return "w"
+func (b *Board) Get(x, y int) int {
+	if b.tokens[y][x] == 1 {
+		return black
+	} else if b.tokens[y][x] == -1 {
+		return white
 	}
-	return "n"
+	return 0
 }
 
 // Display function of chessboard
@@ -81,46 +92,6 @@ func (b *Board) Print() {
 		}
 		fmt.Println()
 	}
-}
-
-func (b *Board) CanPut(x, y, u int) bool {
-	var other, mycolor string
-	if u == black {
-		mycolor = "b"
-		other = "w"
-	} else {
-		mycolor = "w"
-		other = "b"
-	}
-
-	for i := -1; i < 2; i++ {
-		for j := -1; j < 2; j++ {
-			// 違う色判定 && 範囲外でないか
-			if x+i < 0 || x+i >= size || y+j < 0 || y+j >= size {
-				continue
-			}
-			if b.Get(x+i, y+j) != other {
-				continue
-			}
-
-			// 違う色であれば、その方向を進めて反転できる条件にマッチしているか
-			for s := 2; s <= size; s++ {
-				if x+i*s >= 0 &&
-					x+i*s < size &&
-					y+j*s >= 0 &&
-					y+j*s < size {
-					if b.Get(x+i*s, y+j*s) == "n" {
-						break
-					}
-					if b.Get(x+i*s, y+j*s) == mycolor {
-						return true
-					}
-					break
-				}
-			}
-		}
-	}
-	return false
 }
 
 // get player side
@@ -159,7 +130,7 @@ func main() {
 	for {
 		board.Print()
 
-		// fmt.Printf("Player %s's turn. Enter move (row col): ", getPlayerName(player))
+		fmt.Printf("Player %s's turn. Enter move (row col): ", getPlayerName(player))
 		input, err := reader.ReadString('\n')
 		if err != nil {
 			fmt.Println("Error reading input:", err)
