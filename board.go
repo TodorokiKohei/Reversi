@@ -115,12 +115,54 @@ func (b *Board) CanPut(x, y, u int) bool {
 					if b.Get(x+i*s, y+j*s) == mycolor {
 						return true
 					}
-					break
+
 				}
 			}
 		}
 	}
 	return false
+}
+
+func (b *Board) reversal(x, y, u int) {
+	var other, mycolor string
+	if u == black {
+		mycolor = "b"
+		other = "w"
+	} else {
+		mycolor = "w"
+		other = "b"
+	}
+
+	for i := -1; i < 2; i++ {
+		for j := -1; j < 2; j++ {
+			// 違う色判定 && 範囲外でないか
+			if x+i < 0 || x+i >= size || y+j < 0 || y+j >= size {
+				continue
+			}
+			if b.Get(x+i, y+j) != other {
+				continue
+			}
+
+			// 違う色であれば、その方向を進めて反転できる条件にマッチしているか
+			for s := 2; s <= size; s++ {
+				if x+i*s >= 0 &&
+					x+i*s < size &&
+					y+j*s >= 0 &&
+					y+j*s < size {
+					if b.Get(x+i*s, y+j*s) == "n" {
+						break
+					}
+					if b.Get(x+i*s, y+j*s) == mycolor {
+						b.Put(x, y, u)
+						for n := 1; n < s; n++ {
+							b.Put(x+i*n, y+j*n, u)
+						}
+						break
+					}
+				}
+			}
+		}
+	}
 }
 
 // get player side
@@ -150,6 +192,14 @@ func countPieces(board *Board) (blackCount, whiteCount int) {
 	return blackCount, whiteCount
 }
 
+func getPlayerName(u int) string {
+	if u == black {
+		return "black"
+	} else if u == white {
+		return "white"
+	}
+	return ""
+}
 func main() {
 	board := NewBoard()
 	board.Init()
@@ -159,7 +209,7 @@ func main() {
 	for {
 		board.Print()
 
-		// fmt.Printf("Player %s's turn. Enter move (row col): ", getPlayerName(player))
+		fmt.Printf("Player %s's turn. Enter move (row col): ", getPlayerName(player))
 		input, err := reader.ReadString('\n')
 		if err != nil {
 			fmt.Println("Error reading input:", err)
@@ -187,7 +237,12 @@ func main() {
 		xInput := col - 1
 		yInput := row - 1
 
+		if !board.CanPut(xInput, yInput, player) {
+			fmt.Println("Invalid move. Can't put.")
+			continue
+		}
 		board.Put(xInput, yInput, player)
+		board.reversal(xInput, yInput, player)
 
 		player = -player
 	}

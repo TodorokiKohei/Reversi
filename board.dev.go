@@ -82,11 +82,11 @@ func (b *Board) Print() {
 		fmt.Printf("%d ", i+1)
 		for j := 0; j < 8; j++ {
 			switch b.Get(j, i) {
-			case "b":
+			case black:
 				fmt.Print("b ")
-			case "w":
+			case white:
 				fmt.Print("w ")
-			case "n":
+			case 0:
 				fmt.Print(". ")
 			}
 		}
@@ -111,9 +111,9 @@ func countPieces(board *Board) (blackCount, whiteCount int) {
 	for i := 0; i < 8; i++ {
 		for j := 0; j < 8; j++ {
 			switch board.Get(j, i) {
-			case "b":
+			case black:
 				blackCount++
-			case "w":
+			case white:
 				whiteCount++
 			}
 		}
@@ -127,6 +127,27 @@ func main() {
 
 	reader := bufio.NewReader(os.Stdin)
 	player := black
+
+	// fmt.Printf("Select the first player (1:black 2:white):")
+	// input, err := reader.ReadString('\n')
+	// if err != nil {
+	// 	fmt.Println("Error reading input:", err)
+	// 	continue
+	// 	}
+	// fst, err := strconv.Atoi(input)
+	// if err != nil {
+	// 	fmt.Println("Invalid input. Must input a number.")
+	// 	continue
+	// 	}
+	// switch fst{
+	// 	case 1:
+	// 		player = black
+	// 	case 2:
+	// 		player = white
+	// 	default:
+	// 		player = 0
+	// }
+
 	for {
 		board.Print()
 
