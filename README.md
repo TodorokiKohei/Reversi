@@ -21,8 +21,8 @@ go run board.go
 * 白黒の数を数えると、勝敗評価
 * (追加)コンピュータ対戦
 * simple AIは、ランダムにコマを配置する
-* normal AIは、Returns the maximum position of a transformable piece
-* hard AIは、ゲーム木探索を行い、指定されたレベル数を探索した後に最適解を返す
+* normal AIは、the current position that can flip the maximum number of opponent's pieces of different colors
+* hard AIは、ミニマックス法でゲーム木探索を行い、指定されたレベル数を探索した後に最適解を返す
 
 
 ## Scrum

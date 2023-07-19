@@ -44,9 +44,9 @@ func (b *Board) Print() {
 			case Empty:
 				fmt.Print(". ")
 			case Black:
-				fmt.Print("B ")
+				fmt.Print("X ")
 			case White:
-				fmt.Print("W ")
+				fmt.Print("O ")
 			}
 		}
 		fmt.Println()
@@ -170,7 +170,7 @@ func main() {
 			makeMove(board, col, row, player)
 		} else {
 			fmt.Printf("AI %s's turn...\n", getPlayerName(player))
-			bestMove := minimax(board, player, 4)
+			bestMove := minimax(board, player, 4) //Set the number of layers to be searched, which can be adjusted as required
 			makeMove(board, bestMove[0], bestMove[1], player)
 			fmt.Printf("AI %s made a move at %s\n", getPlayerName(player), formatMove(bestMove))
 		}
