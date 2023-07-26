@@ -83,6 +83,7 @@ func (b *Board) Print() {
 	}
 }
 
+// CanPut checks whether a piece can be placed at the specified location
 func (b *Board) CanPut(x, y, u int) bool {
 	var other, mycolor string
 	if u == black {
@@ -93,6 +94,7 @@ func (b *Board) CanPut(x, y, u int) bool {
 		other = "b"
 	}
 
+	// Check all surrounding positions
 	for i := -1; i < 2; i++ {
 		for j := -1; j < 2; j++ {
 			// 違う色判定 && 範囲外でないか
@@ -103,7 +105,7 @@ func (b *Board) CanPut(x, y, u int) bool {
 				continue
 			}
 
-			// 違う色であれば、その方向を進めて反転できる条件にマッチしているか
+			// If the piece is of the opposite color, keep moving in that direction to check if it can be flipped
 			for s := 2; s <= size; s++ {
 				if x+i*s >= 0 &&
 					x+i*s < size &&
@@ -123,6 +125,7 @@ func (b *Board) CanPut(x, y, u int) bool {
 	return false
 }
 
+// reversal flips the pieces in all valid directions
 func (b *Board) reversal(x, y, u int) {
 	var other, mycolor string
 	if u == black {
@@ -133,9 +136,11 @@ func (b *Board) reversal(x, y, u int) {
 		other = "b"
 	}
 
+	// Check all surrounding positions
 	for i := -1; i < 2; i++ {
 		for j := -1; j < 2; j++ {
-			// 違う色判定 && 範囲外でないか
+
+			// Check if the position is valid and if the piece is of the opposite color
 			if x+i < 0 || x+i >= size || y+j < 0 || y+j >= size {
 				continue
 			}
@@ -165,23 +170,11 @@ func (b *Board) reversal(x, y, u int) {
 	}
 }
 
-// get player side
-func getPlayerString(player int) string {
-	switch player {
-	case 1:
-		return "b"
-	case -1:
-		return "w"
-	default:
-		return "n"
-	}
-}
-
-//Determine the winner and count the number of Othello pieces.
-func countPieces(board *Board) (blackCount, whiteCount int) {
+// Determine the winner and count the number of Othello pieces.
+func (b *Board) countPieces() (blackCount, whiteCount int) {
 	for i := 0; i < 8; i++ {
 		for j := 0; j < 8; j++ {
-			switch board.Get(j, i) {
+			switch b.Get(j, i) {
 			case "b":
 				blackCount++
 			case "w":
@@ -200,6 +193,26 @@ func getPlayerName(u int) string {
 	}
 	return ""
 }
+
+func (b *Board) CanPlay(u int) bool {
+	for x := 0; x < size; x++ {
+		for y := 0; y < size; y++ {
+			if b.CanPut(x, y, u) {
+				return true
+			}
+		}
+	}
+	return false
+}
+
+func (b *Board) IsGameOver() bool {
+	blackCount, whiteCount := b.countPieces()
+	if blackCount == 0 || whiteCount == 0 || blackCount+whiteCount == size*size {
+		return true
+	}
+	return false
+}
+
 func main() {
 	board := NewBoard()
 	board.Init()
@@ -208,6 +221,12 @@ func main() {
 	player := black
 	for {
 		board.Print()
+
+		if !board.CanPlay(player) {
+			fmt.Printf("Player %s's cannot play. Pass the turn.", getPlayerName(player))
+			player = -player
+			continue
+		}
 
 		fmt.Printf("Player %s's turn. Enter move (row col): ", getPlayerName(player))
 		input, err := reader.ReadString('\n')
@@ -243,6 +262,11 @@ func main() {
 		}
 		board.Put(xInput, yInput, player)
 		board.reversal(xInput, yInput, player)
+
+		if board.IsGameOver() {
+			fmt.Println("Game is over.")
+			break
+		}
 
 		player = -player
 	}
