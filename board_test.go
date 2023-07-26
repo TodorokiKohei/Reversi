@@ -123,3 +123,32 @@ func TestIsGameOver03(t *testing.T) {
 		t.Errorf("Test fail expected: %t, result: %t\n", true, b.IsGameOver())
 	}
 }
+
+func TestGetWinner01(t *testing.T) {
+	b := NewBoard()
+	b.Put(0, 0, black)
+	b.Put(1, 0, black)
+	b.Put(0, 1, white)
+	if b.GetWinner() != "Black" {
+		t.Errorf("Test fail expected: %s, result: %s\n", "Black", b.GetWinner())
+	}
+}
+
+func TestGetWinner02(t *testing.T) {
+	b := NewBoard()
+	b.Put(0, 0, white)
+	b.Put(1, 0, black)
+	b.Put(0, 1, white)
+	if b.GetWinner() != "White" {
+		t.Errorf("Test fail expected: %s, result: %s\n", "White", b.GetWinner())
+	}
+}
+
+func TestGetWinner03(t *testing.T) {
+	b := NewBoard()
+	b.Put(0, 0, black)
+	b.Put(1, 0, white)
+	if b.GetWinner() != "Draw" {
+		t.Errorf("Test fail expected: %s, result: %s\n", "Draw", b.GetWinner())
+	}
+}

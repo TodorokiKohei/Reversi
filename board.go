@@ -213,6 +213,16 @@ func (b *Board) IsGameOver() bool {
 	return false
 }
 
+func (b *Board) GetWinner() string {
+	blackCount, whiteCount := b.countPieces()
+	if blackCount > whiteCount {
+		return "Black"
+	} else if blackCount < whiteCount {
+		return "White"
+	}
+	return "Draw" // Return "Draw" if the number of black and white tokens is equal
+}
+
 func main() {
 	board := NewBoard()
 	board.Init()
@@ -222,8 +232,14 @@ func main() {
 	for {
 		board.Print()
 
+		if board.IsGameOver() {
+			fmt.Println("Game is over.")
+			fmt.Printf("The winner is: %s\n", board.GetWinner())
+			break
+		}
+
 		if !board.CanPlay(player) {
-			fmt.Printf("Player %s's cannot play. Pass the turn.", getPlayerName(player))
+			fmt.Printf("Player %s's cannot play. Pass the turn.\n", getPlayerName(player))
 			player = -player
 			continue
 		}
@@ -263,11 +279,7 @@ func main() {
 		board.Put(xInput, yInput, player)
 		board.reversal(xInput, yInput, player)
 
-		if board.IsGameOver() {
-			fmt.Println("Game is over.")
-			break
-		}
-
 		player = -player
 	}
+
 }
