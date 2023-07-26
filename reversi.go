@@ -260,7 +260,7 @@ func copyBoard(board *Board) *Board {
 }
 
 func formatMove(move []int) string {
-	col := string('a' + move[0])
+	col := string('a' + rune(move[0]))
 	row := strconv.Itoa(move[1] + 1)
 	return col + row
 }
