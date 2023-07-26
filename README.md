@@ -44,3 +44,6 @@ go run board.go
 
 ### Scrum 6
 ![scrum_6](./docs/scrum_6.png)
+
+### Scrum 7
+![scrum_7](./docs/scrum_7.png)
