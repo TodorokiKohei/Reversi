@@ -285,18 +285,16 @@ func main() {
 	fmt.Println("Welcome to Othello!")
 	fmt.Println("Select game mode:")
 	fmt.Println("1. Player vs Player")
-	fmt.Println("2. Player vs Beginner AI")
-	fmt.Println("3. Player vs Intermediate AI")
-	fmt.Println("4. Player vs Advanced AI")
+	fmt.Println("2. Player vs AI")
 
 	gameMode, err := readGameMode(reader)
-	if err != nil {
-		fmt.Println("Invalid game mode. Defaulting to Player vs Player.")
-		gameMode = 1
-	}
+	//	if gameMode != 0 || gameMode != 1 {
+	//		fmt.Println("Invalid game mode. Defaulting to Player vs Player.")
+	//		gameMode = 1
+	//	}
 
 	aiLevel := 0
-	if gameMode != 1 {
+	if gameMode == 2 {
 		fmt.Println("Select AI level:")
 		fmt.Println("1. Beginner (Random Move)")
 		fmt.Println("2. Intermediate (Greedy Move)")
