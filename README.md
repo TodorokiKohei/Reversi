@@ -2,7 +2,7 @@
 
 ## Start
 ```
-go run board.go
+go run reversi.go
 ```
 
 ## User story mapping
@@ -47,3 +47,6 @@ go run board.go
 
 ### Scrum 7
 ![scrum_7](./docs/scrum_7.png)
+
+### Scrum 8
+![scrum_8](./docs/scrum_8.png)
