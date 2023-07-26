@@ -50,3 +50,6 @@ go run reversi.go
 
 ### Scrum 8
 ![scrum_8](./docs/scrum_8.png)
+
+### Scrum 9
+![scrum_9](./docs/scrum_9.png)
