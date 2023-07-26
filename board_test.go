@@ -63,3 +63,63 @@ func TestRereversal(t *testing.T) {
 		t.Errorf("Test fail expected")
 	}
 }
+
+func TestCanPlay01(t *testing.T) {
+	b := NewBoard()
+	b.Init()
+	if b.CanPlay(black) != true {
+		t.Errorf("Test fail expected: %t, result: %t\n", true, b.CanPlay(black))
+	}
+}
+
+func TestCanPlay02(t *testing.T) {
+	b := NewBoard()
+	if b.CanPlay(black) != false {
+		t.Errorf("Test fail expected: %t, result: %t\n", false, b.CanPlay(black))
+	}
+}
+
+func TestCanPlay03(t *testing.T) {
+	b := NewBoard()
+	b.Put(1, 1, white)
+	b.Put(1, 2, black)
+	if b.CanPlay(white) != true {
+		t.Errorf("Test fail expected: %t, result: %t\n", true, b.CanPlay(white))
+	}
+}
+
+func TestIsGameOver01(t *testing.T) {
+	b := NewBoard()
+	b.Init()
+	if b.IsGameOver() != false {
+		t.Errorf("Test fail expected: %t, result: %t\n", false, b.IsGameOver())
+	}
+}
+
+func TestIsGameOver02(t *testing.T) {
+	b := NewBoard()
+	for x := 0; x < size; x++ {
+		for y := 0; y < size; y++ {
+			b.Put(x, y, black)
+		}
+	}
+	if b.IsGameOver() != true {
+		t.Errorf("Test fail expected: %t, result: %t\n", true, b.IsGameOver())
+	}
+}
+
+func TestIsGameOver03(t *testing.T) {
+	b := NewBoard()
+	for x := 0; x < size; x++ {
+		for y := 0; y < size; y++ {
+			if (x+y)%2 == 0 {
+				b.Put(x, y, black)
+			} else {
+				b.Put(x, y, white)
+			}
+		}
+	}
+	if b.IsGameOver() != true {
+		t.Errorf("Test fail expected: %t, result: %t\n", true, b.IsGameOver())
+	}
+}
