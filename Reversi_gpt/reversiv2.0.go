@@ -271,8 +271,12 @@ func isGameOver(board *Board) bool {
 func getWinner(board *Board) int {
 	blackCount, whiteCount := countPieces(board)
 	if blackCount > whiteCount {
+		fmt.Println("blackCount are ", blackCount)
+		fmt.Println("whiteCount are ", whiteCount)
 		return Black
 	} else if whiteCount > blackCount {
+		fmt.Println("blackCount are ", blackCount)
+		fmt.Println("whiteCount are ", whiteCount)
 		return White
 	}
 	return Empty
@@ -298,9 +302,6 @@ func main() {
 
 	aiLevel := 0
 	for {
-		if gameMode == 1 {
-			break
-		}
 		if gameMode == 2 {
 			fmt.Println("Select AI level:")
 			fmt.Println("1. Beginner (Random Move)")
@@ -358,7 +359,7 @@ func main() {
 			case 2:
 				bestMove = getBestMove(board, player)
 			case 3:
-				bestMove = minimax(board, player, 4)
+				bestMove = minimax(board, player, 4) //The depth of the game tree, which determines the optimal solution for the AI up to the depth step
 			default:
 				bestMove = randomMove(board, player)
 			}
